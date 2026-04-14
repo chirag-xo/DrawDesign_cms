@@ -22,10 +22,19 @@ const config: Core.Config.Middlewares = [
     name: 'strapi::cors',
     config: {
       origin: [
-        ...(process.env.CORS_ORIGINS ? process.env.CORS_ORIGINS.split(',') : []),
-        process.env.PUBLIC_URL ? process.env.PUBLIC_URL : 'http://localhost:1337',
-        'http://localhost:3000',
+        // Match all *.vercel.app preview URLs dynamically
+        /^https:\/\/(.*)\.vercel\.app$/,
+        // Explicit production
+        'https://draw-design.vercel.app',
+        // Example current preview
+        'https://draw-design-knbdarmx4-chirag-xos-projects.vercel.app',
+        // Local environments
         'http://localhost:5173',
+        'http://localhost:8080',
+        'http://localhost:3000',
+        // Automatic backend admin fail-safe
+        process.env.PUBLIC_URL ? process.env.PUBLIC_URL : 'http://localhost:1337',
+        ...(process.env.CORS_ORIGINS ? process.env.CORS_ORIGINS.split(',') : []),
       ],
       methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
       headers: ['Content-Type', 'Authorization', 'Origin', 'Accept'],
