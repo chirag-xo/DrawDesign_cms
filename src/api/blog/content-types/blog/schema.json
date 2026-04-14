@@ -46,9 +46,6 @@
     "seoDescription": {
       "type": "text",
       "maxLength": 160
-    },
-    "publishedAt": {
-      "type": "datetime"
     }
   }
 }
